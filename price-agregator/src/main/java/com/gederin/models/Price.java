@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Price {
-
-    private Integer productId;
-    private Long minimal;
-    private Long avegare;
-    private Long maximum;
+    private String productId;
+    private String minimal;
+    private String avegare;
+    private String maximum;
 }
