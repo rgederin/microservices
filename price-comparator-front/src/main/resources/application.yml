@@ -1,0 +1,5 @@
+productCatalogueUri: http://localhost:8080/api
+priceServiceUri: http://localhost:8070/api
+
+server:
+  port: 8090
