@@ -16,14 +16,14 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public Flux<Product> fetchAllProducts() {
-        return productRepository.getAllProducts();
+        return productRepository.fetchAllProducts();
     }
 
-    public Mono<Product> saveProduct(Mono<Product> product) {
-        return productRepository.save(product);
+    public Mono<Product> fetchProductById(int id) {
+        return productRepository.fetchProductById(id);
     }
 
-    public Mono<Product> fetchProductById(int id){
-        return productRepository.getProductById(id);
+    public Mono<Void> saveProduct(Mono<Product> product) {
+        return productRepository.saveProduct(product);
     }
 }

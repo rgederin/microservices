@@ -21,20 +21,26 @@ public class ProductRepository {
         products = new LinkedHashMap<>();
 
         products.put(1, new Product("1", "Iphone X", "The newest one", "Phone"));
-        products.put(1, new Product("2", "Iphone 6S", "Gold", "Phone"));
-        products.put(1, new Product("3", "Iphone 4", "Veteran", "Phone"));
+        products.put(2, new Product("2", "Iphone 6S", "Gold", "Phone"));
+        products.put(3, new Product("3", "Iphone 4", "Veteran", "Phone"));
     }
 
-    public Mono<Product> save(Mono<Product> product) {
-        return Mono.just(products.put(Integer.valueOf(product.block().getId()), product.block()));
-    }
-
-    public Flux<Product> getAllProducts() {
+    public Flux<Product> fetchAllProducts() {
         return Flux.fromIterable(products.values());
     }
 
-    public Mono<Product> getProductById(int id) {
+    public Mono<Product> fetchProductById(int id) {
         return Mono.justOrEmpty(products.get(id));
+    }
+
+    public Mono<Void> saveProduct(Mono<Product> product) {
+        return product.doOnNext(this::save)
+                .thenEmpty(Mono.empty());
+    }
+
+    private void save(Product product) {
+        int id = products.size() + 1;
+        products.put(id, product);
     }
 }
 

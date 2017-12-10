@@ -1,7 +1,6 @@
 package com.gederin.route;
 
-import com.gederin.model.Product;
-import com.gederin.service.ProductService;
+import com.gederin.handler.ProductHandler;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,30 +9,24 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
+import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RequestPredicates.path;
 import static org.springframework.web.reactive.function.server.RouterFunctions.nest;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Configuration
 public class ProductRoutes {
 
+    private static final String ROOT = "/api";
+    private static final String GET_ALL_PRODUCTS = "/products";
+    private static final String GET_PRODUCT_BY_ID = "/product/{id}";
+    private static final String SAVE_PRODUCT = "/product";
+
     @Bean
-    RouterFunction<?> routes(ProductService productService) {
-        return nest(path("/api"),
-                route(GET("/product/{id}"), serverRequest -> ok()
-                        .contentType(APPLICATION_JSON)
-                        .body(productService.fetchProductById(Integer.parseInt(serverRequest.pathVariable("id"))), Product.class))
-
-                        .andRoute(GET("/products"), serverRequest -> ok()
-                                .contentType(APPLICATION_JSON)
-                                .body(productService.fetchAllProducts(), Product.class))
-
-                        .andRoute(POST("/product"), serverRequest -> {
-                            productService.saveProduct(serverRequest.bodyToMono(Product.class)).subscribe();
-                            return ok().contentType(APPLICATION_JSON).build();
-                        }));
+    RouterFunction<?> routes(ProductHandler handler) {
+        return nest(path(ROOT),
+                nest(accept(APPLICATION_JSON), route(GET(GET_ALL_PRODUCTS), handler::fetchAllProducts)
+                        .andRoute(GET(GET_PRODUCT_BY_ID), handler::fetchProductById))
+                        .andRoute(POST(SAVE_PRODUCT), handler::saveProduct));
     }
 }
-
-
