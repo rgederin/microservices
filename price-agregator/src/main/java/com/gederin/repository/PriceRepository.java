@@ -1,6 +1,8 @@
-package com.gederin.repositories;
+package com.gederin.repository;
 
-import com.gederin.models.Price;
+import com.gederin.model.Price;
+
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Repository
 @Slf4j
 public class PriceRepository {
     private final Map<Integer, Price> prices;

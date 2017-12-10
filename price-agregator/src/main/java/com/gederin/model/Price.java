@@ -1,4 +1,4 @@
-package com.gederin.models;
+package com.gederin.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
