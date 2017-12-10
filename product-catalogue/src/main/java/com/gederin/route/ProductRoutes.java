@@ -18,15 +18,15 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class ProductRoutes {
 
     private static final String ROOT = "/api";
-    private static final String GET_ALL_PRODUCTS = "/products";
-    private static final String GET_PRODUCT_BY_ID = "/product/{id}";
+    private static final String ALL_PRODUCTS = "/products";
+    private static final String PRODUCT_BY_ID = "/product/{id}";
     private static final String SAVE_PRODUCT = "/product";
 
     @Bean
     RouterFunction<?> routes(ProductHandler handler) {
         return nest(path(ROOT),
-                nest(accept(APPLICATION_JSON), route(GET(GET_ALL_PRODUCTS), handler::fetchAllProducts)
-                        .andRoute(GET(GET_PRODUCT_BY_ID), handler::fetchProductById))
+                nest(accept(APPLICATION_JSON), route(GET(ALL_PRODUCTS), handler::fetchAllProducts)
+                        .andRoute(GET(PRODUCT_BY_ID), handler::fetchProductById))
                         .andRoute(POST(SAVE_PRODUCT), handler::saveProduct));
     }
 }
