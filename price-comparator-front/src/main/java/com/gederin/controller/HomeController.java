@@ -14,7 +14,7 @@ public class HomeController {
 
     private final ProductService productService;
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index(Model model) throws InterruptedException {
         model.addAttribute("products", productService.getProductsWithPrice());
 

@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -15,10 +16,12 @@ import static org.springframework.web.reactive.function.BodyInserters.fromObject
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class ProductHandler {
     private final ProductService productService;
 
     public Mono<ServerResponse> fetchAllProducts(ServerRequest serverRequest) {
+        log.error("fetching all products");
         return ServerResponse.ok()
                 .contentType(APPLICATION_JSON)
                 .body(productService.fetchAllProducts(), Product.class);

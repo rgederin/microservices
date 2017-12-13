@@ -8,61 +8,39 @@ import com.gederin.repository.ProductRepository;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
-
-import static com.gederin.dto.PriceDto.DEFAULT_PRICE_DTO;
+import reactor.util.function.Tuple2;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ProductService {
 
     private final ProductRepository productRepository;
 
     private final PriceRepository priceRepository;
 
+
     public Flux<ProductWithPrice> getProductsWithPrice() throws InterruptedException {
-        Map<String, PriceDto> prices = getPrices();
-
-        List<ProductDto> products = getProducts();
-
-        return Flux.fromIterable(products.stream()
-                .map(productDto -> {
-                    PriceDto priceDto = prices.getOrDefault(productDto.getId(), DEFAULT_PRICE_DTO);
-                    return buildProductWithPrice(productDto, priceDto);
-                }).filter(productWithPrice -> Objects.nonNull(productWithPrice.getId()))
-                .collect(Collectors.toList()));
+        return zipIntoProductWithPrices(productRepository.getProductDtos(), priceRepository.getPriceDtos());
     }
 
-    private Map<String, PriceDto> getPrices() throws InterruptedException {
-        return priceRepository.getPriceDtos()
-                .collectList()
-                .block()
-                .stream()
-                .collect(Collectors.toMap(PriceDto::getProductId, Function.identity()));
+    private Flux<ProductWithPrice> zipIntoProductWithPrices(Flux<ProductDto> products, Flux<PriceDto> prices) {
+        return Flux.zip(products, prices)
+                .map(this::buildProductWithPrice);
     }
 
-    private List<ProductDto> getProducts() throws InterruptedException {
-        return productRepository.getProductDtos()
-                .collectList()
-                .block();
-    }
-
-    private ProductWithPrice buildProductWithPrice(ProductDto productDto, PriceDto priceDto) {
+    private ProductWithPrice buildProductWithPrice(Tuple2<ProductDto, PriceDto> pair) {
         return ProductWithPrice.builder()
-                .id(productDto.getId())
-                .name(productDto.getName())
-                .description(productDto.getDescription())
-                .category(productDto.getCategory())
-                .minimal(priceDto.getMinimal())
-                .average(priceDto.getAvegare())
-                .maximum(priceDto.getMaximum())
+                .id(pair.getT1().getId())
+                .name(pair.getT1().getName())
+                .description(pair.getT1().getDescription())
+                .category(pair.getT1().getCategory())
+                .minimal(pair.getT2().getMinimal())
+                .average(pair.getT2().getAvegare())
+                .maximum(pair.getT2().getMaximum())
                 .build();
     }
 }

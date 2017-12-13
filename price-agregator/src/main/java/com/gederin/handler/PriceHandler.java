@@ -8,6 +8,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -15,6 +16,7 @@ import static org.springframework.web.reactive.function.BodyInserters.fromObject
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class PriceHandler {
 
     private final PriceRepository repository;
@@ -28,6 +30,7 @@ public class PriceHandler {
     }
 
     public Mono<ServerResponse> fetchAllPrices(ServerRequest serverRequest) {
+        log.error("fetching all prices");
         return ServerResponse.ok()
                 .contentType(APPLICATION_JSON)
                 .body(repository.fetchAllPrices(), Price.class);
