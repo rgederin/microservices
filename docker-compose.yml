@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+  service-discovery:
+    restart: always
+    build: service-discovery
+    ports:
+      - 8001:8001
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
+  product-catalogue:
+    restart: always
+    build: product-catalogue
+    ports:
+      - 8002:8002
+    links:
+      - service-discovery
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
+  price-agregator:
+    restart: always
+    build: price-agregator
+    ports:
+      - 8003:8003
+    links:
+      - service-discovery
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
+  price-comparator-front:
+    restart: always
+    build: price-comparator-front
+    ports:
+      - 8005:8005
+    links:
+      - service-discovery
+      - price-agregator
+      - product-catalogue
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
