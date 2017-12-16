@@ -13,13 +13,13 @@ MAINTAINER altfatterz@gmail.com
 VOLUME /tmp
 
 # The project JAR file is ADDed to the container as "app.jar"
-ADD target/product-catalogue.jar app.jar
+ADD target/service-config.jar app.jar
 
 # script files related to check if the datastore is “ready”
 ADD scripts/wait-for-it.sh wait-for-it.sh
 ADD scripts/start.sh start.sh
 
-EXPOSE 8002
+EXPOSE 8010
 
 # You can use a RUN command to "touch" the jar file so that it has a file modification time
 # (Docker creates all container files in an "unmodified" state by default)
@@ -30,7 +30,3 @@ RUN ["chmod", "+x", "/start.sh"]
 RUN bash -c 'touch /app.jar'
 
 CMD ["./start.sh"]
-
-
-
-

@@ -1,0 +1,27 @@
+productCatalogueUri: http://localhost:8002/api
+priceServiceUri: http://localhost:8003/api
+
+server:
+  port: 8005
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8001/eureka}
+  instance:
+    preferIpAddress: true
+
+
+---
+spring:
+  profiles: prod
+
+productCatalogueUri: http://product-catalogue:8002/api
+priceServiceUri: http://price-agregator:8003/api
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://service-discovery:8001/eureka}
+  instance:
+    preferIpAddress: true

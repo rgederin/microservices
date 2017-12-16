@@ -1,0 +1,21 @@
+server:
+  port: 8003
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8001/eureka}
+  instance:
+    preferIpAddress: true
+
+
+---
+
+spring:
+  profiles: prod
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://service-discovery:8001/eureka}
+  instance:
+    preferIpAddress: true

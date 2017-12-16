@@ -1,0 +1,21 @@
+---
+spring:
+  application:
+    name: service-config
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+     active: native
+
+server:
+  port: 8010
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://service-discovery:8001/eureka}
+  instance:
+    preferIpAddress: true

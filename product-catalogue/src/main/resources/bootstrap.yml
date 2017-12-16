@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: product-catalogue
+  cloud:
+      config:
+        uri: http://localhost:8010
+
+
+---
+spring:
+  profiles: prod
+
+spring:
+  cloud:
+    config:
+      uri: http://service-config:8010
