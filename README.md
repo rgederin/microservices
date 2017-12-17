@@ -20,7 +20,7 @@ cd microservices/
 
 *  **product-catalogue**: provides REST endpoint for getting products list
 *  **price-agregator**: provides REST endpoint for getting min, avg, max prices for products
-*  **product-agregator-front**: receives stream of products and prices, merges it and display
+*  **product-agregator-front**: receives streams of products and prices from endpoints, merges it and display
 *  **api-gateway**: routes requests from frontend service to needful endpoints
 *  **service-config**: keeps all config files for all services
 *  **service-discovery**: acts as passive service discovery server
