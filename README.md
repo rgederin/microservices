@@ -9,6 +9,9 @@ Be sure that you have docker or docker tool installed on your machine
 
 cd microservices/
 ./build-and-run.sh
+
+http://localhost:8005/index  - application itself
+http://localhost:8001 - Eureka dashboard
 ```
 
 ## Architecture and technologies
