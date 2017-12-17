@@ -20,8 +20,8 @@ eureka:
 spring:
   profiles: prod
 
-productCatalogueUri: http://product-catalogue:8002/api
-priceServiceUri: http://price-agregator:8003/api
+productCatalogueUri: http://api-gateway:8011/products
+priceServiceUri: http://api-gateway:8011/prices
 
 eureka:
   client:

@@ -11,6 +11,12 @@ mvn clean install
 
 cd ..
 
+cd api-gateway
+
+mvn clean install
+
+cd ..
+
 cd price-agregator
 
 mvn clean install

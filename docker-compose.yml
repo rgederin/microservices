@@ -7,12 +7,22 @@ services:
     ports:
       - 8001:8001
 
-
   service-config:
     restart: always
     build: service-config
     ports:
       - 8010:8010
+
+  api-gateway:
+    restart: always
+    build: api-gateway
+    ports:
+      - 8011:8011
+    depends_on:
+      - service-discovery
+      - service-config
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
 
   product-catalogue:
     restart: always
