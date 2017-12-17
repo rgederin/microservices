@@ -14,6 +14,7 @@ http://localhost:8005/index  - application itself
 http://localhost:8001 - Eureka dashboard
 ```
 
+
 ## Architecture and technologies
 
 ![Architecture and technologies](https://github.com/rgederin/microservices/blob/master/img/microservice.jpg)
