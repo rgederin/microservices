@@ -1,10 +1,13 @@
 spring:
   application:
     name: price-agregator
+---
+spring:
+  profiles: default
+
   cloud:
     config:
       uri: http://localhost:8010
-
 ---
 spring:
   profiles: prod

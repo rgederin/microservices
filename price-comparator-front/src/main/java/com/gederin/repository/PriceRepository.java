@@ -31,7 +31,7 @@ public class PriceRepository {
         log.error("calling prices {}", priceServiceUrl);
 
         return webClient.get()
-                .uri(priceServiceUrl + "/prices/")
+                .uri(priceServiceUrl)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToFlux(PriceDto.class);

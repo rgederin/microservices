@@ -1,8 +1,12 @@
-productCatalogueUri: http://localhost:8002/api
-priceServiceUri: http://localhost:8003/api
-
 server:
   port: 8005
+
+---
+spring:
+  profiles: default
+
+productCatalogueUri: http://localhost:8011/products
+priceServiceUri: http://localhost:8011/prices
 
 eureka:
   client:

@@ -31,7 +31,7 @@ public class ProductRepository {
 
         return webClient
                 .get()
-                .uri(productCatalogServiceUrl + "/products/")
+                .uri(productCatalogServiceUrl)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToFlux(ProductDto.class);

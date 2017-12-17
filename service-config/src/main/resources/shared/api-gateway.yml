@@ -1,6 +1,12 @@
 server:
-  port: 8003
+  port: 8011
+  context-path: /api
 
+spring:
+  aop:
+    proxyTargetClass: true
+
+---
 spring:
   profiles: default
 
@@ -11,7 +17,12 @@ eureka:
   instance:
     preferIpAddress: true
 
-
+zuul:
+  routes:
+    products:
+      url: http://localhost:8002/api/products
+    prices:
+      url: http://localhost:8003/api/prices
 ---
 
 spring:

@@ -1,6 +1,7 @@
 spring:
   application:
-    name: product-catalogue
+    name: api-gateway
+
 
 ---
 spring:
