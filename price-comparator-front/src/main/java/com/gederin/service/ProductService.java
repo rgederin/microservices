@@ -22,12 +22,12 @@ public class ProductService {
 
     private final PriceRepository priceRepository;
 
-
     public Flux<ProductWithPrice> getProductsWithPrice() throws InterruptedException {
-        Flux<ProductDto> p = productRepository.getProductDtos();
-        Flux<PriceDto> pr =  priceRepository.getPriceDtos();
-        Flux<ProductWithPrice> f = zipIntoProductWithPrices(p, pr);
-        return f;
+        Flux<ProductDto> products = productRepository.getProductDtos();
+        Flux<PriceDto> prices =  priceRepository.getPriceDtos();
+        Flux<ProductWithPrice> productWithPrices = zipIntoProductWithPrices(products, prices);
+
+        return productWithPrices;
     }
 
     private Flux<ProductWithPrice> zipIntoProductWithPrices(Flux<ProductDto> products, Flux<PriceDto> prices) {
